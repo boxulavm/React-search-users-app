@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Spinner from '../layout/Spinner'
+import {Spring} from 'react-spring/renderprops'
 
 export default class MoreInfo extends Component {
     state = {
@@ -24,8 +25,14 @@ export default class MoreInfo extends Component {
             return <Spinner />
         } else {
             return(
-                <React.Fragment>
-                    <div className="card">
+                <>
+                <Spring
+                from={{ opacity: 0 }}
+                to={{ opacity: 1 }}
+                config={{delay: 400}} 
+                >
+                {props =>
+                    <div style={props} className="card">
                         <h2 className="card-header text-info">
                             {user_info.name}
                         </h2>
@@ -48,9 +55,10 @@ export default class MoreInfo extends Component {
                             <strong>Email</strong>: {user_info.email}
                             </li>
                         </ul>
-                    </div>
+                    </div>}
+                    </Spring>
                     <Link to='/' className='btn btn-dark mt-4 mb-2'><i className='fas fa-chevron-left'></i> Go Back</Link>
-                </React.Fragment>
+                    </>
             )
         }
     }
